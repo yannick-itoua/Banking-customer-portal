@@ -1,0 +1,339 @@
+# Banking Customer Portal - .gitignore
+
+# ===========================================
+# GENERAL
+# ===========================================
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# ===========================================
+# JAVA / SPRING BOOT (Backend)
+# ===========================================
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual machine crash logs
+hs_err_pid*
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Spring Boot
+.spring-boot-devtools.properties
+
+# Application properties with sensitive data
+application-local.properties
+application-dev.properties
+application-prod.properties
+
+# ===========================================
+# NODE.JS / NEXT.JS (Frontend)
+# ===========================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Next.js build output
+.next/
+out/
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# ===========================================
+# DOCKER
+# ===========================================
+
+# Docker volumes
+docker-compose.override.yml
+.docker/
+
+# ===========================================
+# DATABASE
+# ===========================================
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# PostgreSQL
+*.pgsql
+
+# ===========================================
+# SECURITY & SENSITIVE DATA
+# ===========================================
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# JWT secrets and keys
+*.key
+*.pem
+*.p12
+*.jks
+
+# Configuration files with secrets
+config/secrets.yml
+config/database.yml
+src/main/resources/application-prod.properties
+src/main/resources/application-secrets.properties
+
+# SSL certificates
+*.crt
+*.cert
+*.ca-bundle
+
+# ===========================================
+# TESTING
+# ===========================================
+
+# Test coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# Jest
+jest-coverage/
+
+# ===========================================
+# DEPLOYMENT
+# ===========================================
+
+# Production build files
+build/
+dist/
+
+# Deployment scripts with sensitive data
+deploy.sh
+deploy.bat
+
+# Kubernetes secrets
+k8s-secrets.yml
+secrets.yml
+
+# ===========================================
+# LOGS
+# ===========================================
+
+# Application logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Spring Boot logs
+spring.log
+application.log
+
+# ===========================================
+# BACKUP & TEMPORARY FILES
+# ===========================================
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Archive files
+*.zip
+*.tar
+*.gz
+*.7z
+
+# ===========================================
+# PACKAGE MANAGERS
+# ===========================================
+
+# NPM
+package-lock.json
+
+# Yarn
+yarn.lock
+
+# PNPM
+pnpm-lock.yaml
+
+# ===========================================
+# IDE SPECIFIC
+# ===========================================
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ===========================================
+# CUSTOM PROJECT SPECIFIC
+# ===========================================
+
+# Custom application data
+uploads/
+files/
+media/
+
+# Generated documentation
+docs/generated/
+
+# Cache directories
+.cache/
+.parcel-cache/
+
+# Runtime configuration
+runtime-config.json
