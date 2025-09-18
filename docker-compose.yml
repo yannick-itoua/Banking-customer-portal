@@ -4,9 +4,9 @@ services:
     container_name: banking-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: banking_portal
-      POSTGRES_USER: banking_user
-      POSTGRES_PASSWORD: banking_password
+      POSTGRES_DB: ${POSTGRES_DB:-banking_portal}
+      POSTGRES_USER: ${POSTGRES_USER:-banking_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-banking_password}
     ports:
       - "5432:5432"
     volumes:
@@ -24,9 +24,11 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/banking_portal
-      SPRING_DATASOURCE_USERNAME: banking_user
-      SPRING_DATASOURCE_PASSWORD: banking_password
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL:-jdbc:postgresql://postgres:5432/banking_portal}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME:-banking_user}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-banking_password}
+      JWT_SECRET: ${JWT_SECRET:-WHVhYV1OU3Ryc0NRQ11Mb3ZEb1t3Z0dVY11LeFJ3cnlyXWJiZ3h0eGNMb1pjcFFJVnZdXWNLWEpgdEddX1xJXw==}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-86400000}
     depends_on:
       - postgres
     networks:
