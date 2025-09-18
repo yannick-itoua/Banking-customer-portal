@@ -1,8 +1,31 @@
 # 🏦 Banking Customer Portal
 
-A modern and secure banking portal developed with Spring Boot and Next.js, offering a complete digital banking management solution for financial institutions and their clients.
+A modern and secure banking portal developed with Spring Boot and Next.js, offering a complete digital banking management solution for financial institutions and thei### Environment Variables
 
-## 🎯 Problem Solved in Society
+**SECURITY NOTICE**: The project now uses environment variables for all sensitive configuration.
+
+**Required Environment Variables**:
+```bash
+# JWT Configuration (CRITICAL - Generate unique values)
+JWT_SECRET=your_secure_jwt_secret_base64_encoded_min_256_bits
+JWT_EXPIRATION=86400000
+
+# Database Configuration
+POSTGRES_DB=banking_portal
+POSTGRES_USER=banking_user
+POSTGRES_PASSWORD=your_secure_database_password
+
+# Spring Boot Configuration
+SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/banking_portal
+SPRING_DATASOURCE_USERNAME=banking_user
+SPRING_DATASOURCE_PASSWORD=your_secure_database_password
+```
+
+**Setup Process**:
+1. Copy `.env.example` to `.env`
+2. Generate secure values for all secrets
+3. Never commit `.env` files to version control
+4. Use different secrets for development/production# 🎯 Problem Solved in Society
 
 ### Challenges of Traditional Banking Institutions
 
@@ -75,12 +98,38 @@ The **Banking Customer Portal** addresses these challenges by offering:
 git clone https://github.com/yannick-itoua/Banking-customer-portal.git
 cd Banking-customer-portal
 
+# IMPORTANT: Set up environment variables for security
+cp .env.example .env
+# Edit .env file with your production values, especially JWT_SECRET
+
 # Start all services
 docker-compose up --build
 
 # Or in background
 docker-compose up -d --build
 ```
+
+### ⚠️ Security Setup (REQUIRED)
+
+**CRITICAL**: This application requires environment variables for security:
+
+1. **Copy the environment template**:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Generate a new JWT secret**:
+   ```bash
+   # Using OpenSSL (recommended)
+   openssl rand -base64 64
+   
+   # Or using PowerShell
+   [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes((1..64|%{[char](Get-Random -Min 65 -Max 122)})-join''))
+   ```
+
+3. **Update your .env file** with the new JWT secret and secure database passwords
+
+4. **Never commit .env files** - they are excluded in .gitignore for security
 
 ### Service Access
 
@@ -126,12 +175,14 @@ Banking-customer-portal/
 
 ### Implemented Security Measures
 
-- **🔒 JWT Authentication** - Secure tokens with expiration
+- **🔒 JWT Authentication** - Secure tokens with expiration (configurable via environment)
 - **🛡️ CORS Protection** - Restrictive configuration
 - **🔐 Password Hashing** - BCrypt for storage
 - **🚫 Input Validation** - Protection against injections
 - **👤 Role-based Authorization** - Access based on permissions
 - **🌐 HTTPS Ready** - Ready for secure deployment
+- **🔑 Environment Variables** - No hardcoded secrets in code
+- **📋 Security Audit** - Git history cleaned of exposed secrets
 
 ## 📊 API Endpoints
 
