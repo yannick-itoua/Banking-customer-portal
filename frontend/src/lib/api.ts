@@ -82,8 +82,8 @@ export interface AccountCreationRequest {
 }
 
 // API Configuration
-// For Railway deployment: use environment variable, fallback to localhost
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+// For Railway deployment: use environment variable, fallback to Railway backend
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://amusing-happiness-production.up.railway.app';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
