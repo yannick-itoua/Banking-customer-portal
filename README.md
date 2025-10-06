@@ -1,31 +1,140 @@
 # 🏦 Banking Customer Portal
 
-A modern and secure banking portal developed with Spring Boot and Next.js, offering a complete digital banking management solution for financial institutions and thei### Environment Variables
+A modern and secure banking portal developed with Spring Boot and Next.js, offering a complete digital banking management solution for financial institutions and their customers.
 
-**SECURITY NOTICE**: The project now uses environment variables for all sensitive configuration.
+## 🚀 Railway Deployment Guide
 
-**Required Environment Variables**:
-```bash
-# JWT Configuration (CRITICAL - Generate unique values)
-JWT_SECRET=your_secure_jwt_secret_base64_encoded_min_256_bits
-JWT_EXPIRATION=86400000
+This application is optimized for deployment on Railway with PostgreSQL. Follow this guide for production deployment.
 
-# Database Configuration
-POSTGRES_DB=banking_portal
-POSTGRES_USER=banking_user
-POSTGRES_PASSWORD=your_secure_database_password
-
-# Spring Boot Configuration
-SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/banking_portal
-SPRING_DATASOURCE_USERNAME=banking_user
-SPRING_DATASOURCE_PASSWORD=your_secure_database_password
+### 📋 Project Architecture
+```
+Banking-customer-portal/
+├── backend/                 # Spring Boot API (Java 17)
+│   ├── src/main/java/
+│   ├── pom.xml
+│   ├── Dockerfile
+│   └── start.sh            # Railway DATABASE_URL conversion
+├── frontend/               # Next.js App (React 18)
+│   ├── src/
+│   ├── package.json
+│   ├── server.js          # Custom Express server
+│   └── Dockerfile
+└── README.md
 ```
 
-**Setup Process**:
-1. Copy `.env.example` to `.env`
-2. Generate secure values for all secrets
-3. Never commit `.env` files to version control
-4. Use different secrets for development/production# 🎯 Problem Solved in Society
+### 🗄️ Railway Database Setup
+
+#### 1. Create PostgreSQL Database
+1. In Railway dashboard: **New** → **Database** → **PostgreSQL**
+2. Railway auto-generates connection details
+3. Note the **DATABASE_URL** format: `postgresql://user:pass@host:port/db`
+
+#### 2. Database Configuration
+The backend is configured to automatically use Railway's `DATABASE_URL` environment variable:
+- **Production**: Uses Railway's `DATABASE_URL` (auto-converted from `postgresql://` to `jdbc:postgresql://`)
+- **Development**: Falls back to local PostgreSQL connection
+
+### 🔧 Backend Deployment (Spring Boot)
+
+#### 1. Create Backend Service
+1. **New Service** → **GitHub Repo** → Select your repository
+2. **Root Directory**: Set to `backend/`
+3. Railway auto-detects the Dockerfile
+
+#### 2. Environment Variables
+Railway will automatically set:
+- `DATABASE_URL` (linked from PostgreSQL service)
+- `PORT` (Railway sets this automatically)
+
+Optional environment variables:
+```bash
+JWT_SECRET=your_secure_jwt_secret_base64_encoded_min_256_bits
+JWT_EXPIRATION=86400000
+```
+
+#### 3. Generate Domain
+- **Settings** → **Networking** → **Generate Domain**
+- Note the backend URL (e.g., `https://backend-prod.up.railway.app`)
+
+### ⚛️ Frontend Deployment (Next.js)
+
+#### 1. Create Frontend Service
+1. **New Service** → **GitHub Repo** → Select your repository
+2. **Root Directory**: Set to `frontend/`
+3. Railway auto-detects the Dockerfile
+
+#### 2. Environment Variables
+**CRITICAL**: Set this environment variable:
+```bash
+NEXT_PUBLIC_API_URL=https://your-backend-domain.up.railway.app
+```
+
+#### 3. Port Configuration
+**IMPORTANT**: Manually set port in Railway service settings:
+- **Settings** → **Environment** → **PORT** = `8080`
+
+#### 4. Generate Domain
+- **Settings** → **Networking** → **Generate Domain**
+- Your app will be available at this URL
+
+### 🔗 Final Configuration
+
+#### 1. Update Backend CORS (If Needed)
+If you encounter CORS errors, update the backend's `SecurityConfig.java`:
+```java
+configuration.setAllowedOriginPatterns(Arrays.asList(
+    "http://localhost:*",
+    "https://localhost:*", 
+    "https://*.railway.app",
+    "https://*.up.railway.app",
+    "https://your-frontend-domain.up.railway.app"  // Add your specific domain
+));
+```
+
+#### 2. Health Checks
+Both services include health check endpoints:
+- **Backend**: `https://your-backend-domain.up.railway.app/api/debug/health`
+- **Frontend**: `https://your-frontend-domain.up.railway.app/health`
+
+### 📊 Final Architecture
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Next.js App   │    │  Spring Boot    │    │   PostgreSQL    │
+│  (Frontend)     │◄──►│    (Backend)    │◄──►│   (Database)    │
+│                 │    │                 │    │                 │
+│ Port: 8080      │    │ Port: Auto      │    │ Port: 5432      │
+│ Express Server  │    │ Tomcat Server   │    │ Railway Managed │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+       │                        │                        │
+       │                        │                        │
+   Railway                  Railway                  Railway
+   Service 1                Service 2                Service 3
+```
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+**502 Errors**
+- Cause: Railway can't detect your app port
+- Solution: Manually set `PORT=8080` in frontend service settings
+
+**CORS Errors**
+- Cause: Backend doesn't allow frontend domain
+- Solution: Add frontend domain to CORS configuration in `SecurityConfig.java`
+
+**Database Connection Issues**
+- Cause: Wrong URL format
+- Solution: The `start.sh` script automatically converts Railway's `postgresql://` to `jdbc:postgresql://`
+
+**Build Failures**
+- Cause: Environment variables not available during build
+- Solution: Set `NEXT_PUBLIC_API_URL` in Railway environment variables before deployment
+
+---
+
+## 🎯 Problem Solved in Society
 
 ### Challenges of Traditional Banking Institutions
 

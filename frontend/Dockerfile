@@ -1,4 +1,4 @@
-# Banking Customer Portal - React Frontend Dockerfile
+# Banking Customer Portal - Next.js Frontend Dockerfile for Railway
 # Multi-stage build for production optimization
 
 # Stage 1: Build the application
@@ -10,13 +10,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies (all dependencies needed for build)
+# Install dependencies
 RUN npm install
 
 # Copy source code
 COPY . .
 
 # Build the application
+# NEXT_PUBLIC_API_URL will be provided by Railway environment variable
 RUN npm run build
 
 # Stage 2: Production image
@@ -29,24 +30,30 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy built application from builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Copy package files for production dependencies
+COPY package*.json ./
 
-# Copy public directory if it exists
+# Install only production dependencies
+RUN npm install --only=production
+
+# Copy built application from builder stage
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-# Change ownership to nextjs user
+# Copy server.js for custom Express server
+COPY --chown=nextjs:nodejs server.js ./
+
+# Change ownership and switch to non-root user
 RUN chown -R nextjs:nodejs /app
 USER nextjs
 
-# Expose port
-EXPOSE 3000
+# Expose port (Railway expects port 8080)
+EXPOSE 8080
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=8080
 ENV HOSTNAME="0.0.0.0"
 
-# Start the application
+# Start the application with custom server
 CMD ["node", "server.js"]

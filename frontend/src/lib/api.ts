@@ -82,13 +82,15 @@ export interface AccountCreationRequest {
 }
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:8080'; // Always use localhost for browser requests
+// For Railway deployment: use environment variable, fallback to localhost
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000,
 });
 
 // Request interceptor to add auth token

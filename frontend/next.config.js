@@ -2,7 +2,6 @@
 const path = require('path');
 
 const nextConfig = {
-  output: 'standalone',
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -11,10 +10,11 @@ const nextConfig = {
     return config;
   },
   async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:8080/api/:path*',
+        destination: `${apiUrl}/api/:path*`,
       },
     ]
   },

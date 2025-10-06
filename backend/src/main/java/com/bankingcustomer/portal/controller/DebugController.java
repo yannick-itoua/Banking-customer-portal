@@ -22,6 +22,15 @@ public class DebugController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, Object>> health() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "healthy");
+        response.put("service", "Banking Customer Portal API");
+        response.put("timestamp", System.currentTimeMillis());
+        return ResponseEntity.ok(response);
+    }
+    
     @GetMapping("/user/{username}")
     public ResponseEntity<?> getUserInfo(@PathVariable String username) {
         try {
