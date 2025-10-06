@@ -1,7 +1,7 @@
-import express from 'express';
-import { createServer } from 'http';
-import { parse } from 'url';
-import next from 'next';
+const express = require('express');
+const { createServer } = require('http');
+const { parse } = require('url');
+const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = process.env.HOSTNAME || '0.0.0.0';
@@ -35,4 +35,7 @@ app.prepare().then(() => {
     console.log(`🟢 Banking Customer Portal Frontend ready on http://${hostname}:${port}`);
     console.log(`🔗 Health check available at http://${hostname}:${port}/health`);
   });
+}).catch((ex) => {
+  console.error('❌ Error starting server:', ex.stack);
+  process.exit(1);
 });
