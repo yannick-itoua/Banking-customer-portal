@@ -35,4 +35,8 @@ fi
 
 # Start the Spring Boot application
 echo "🚀 Starting Banking Customer Portal Backend..."
-exec java -jar app.jar
+exec java \
+  -XX:+UseContainerSupport \
+  -XX:MaxRAMPercentage=75.0 \
+  -Djava.security.egd=file:/dev/./urandom \
+  -jar app.jar
