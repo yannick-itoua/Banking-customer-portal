@@ -14,15 +14,14 @@ RUN ./mvnw dependency:go-offline -B
 # Copy source code
 COPY src src
 
+# Copy start script before building
+COPY start.sh start.sh
+
 # Build the application
 RUN ./mvnw clean package -DskipTests
 
-# Copy the built JAR file and start script
-COPY target/portal-0.0.1-SNAPSHOT.jar app.jar
-COPY start.sh start.sh
-
-# Make start script executable
-RUN chmod +x start.sh
+# Move the built JAR to a predictable location and make start script executable
+RUN mv target/portal-0.0.1-SNAPSHOT.jar app.jar && chmod +x start.sh
 
 # Expose port
 EXPOSE 8080
