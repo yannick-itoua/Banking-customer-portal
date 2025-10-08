@@ -8,8 +8,8 @@ COPY mvnw.cmd .
 COPY .mvn .mvn
 COPY pom.xml .
 
-# Make Maven wrapper executable
-RUN chmod +x mvnw
+# Make Maven wrapper executable and fix potential line ending issues
+RUN sed -i 's/\r$//' mvnw && chmod +x mvnw
 
 # Download dependencies (this will be cached if pom.xml doesn't change)
 RUN ./mvnw dependency:go-offline -B
